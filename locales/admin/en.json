@@ -337,6 +337,7 @@
   "dashboard": "Dashboard",
   "files": "Files",
   "fileName": "Name",
+  "fileType": "Type",
   "fileModified": "Modified",
   "fileSize": "Size",
   "salesReport": "Sales",

@@ -9,10 +9,12 @@ import FileUploader from './fileUploader'
 
 import Paper from 'material-ui/Paper';
 import FontIcon from 'material-ui/FontIcon';
-import IconButton from 'material-ui/IconButton'
+import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 const Fragment = React.Fragment;
+
+const configTypeFile = ['BASE', 'COMP', 'PRICE'];
 
 const iconButtonElement = (
   <IconButton touch={true}>
@@ -42,17 +44,33 @@ class FileItem extends React.Component {
     this.hideDelete();
   };
 
+  handleType = () => {
+ 
+    let type = "unknown";
+    const configTypeFile = ['BASE', 'COMP', 'PRICE'];
+    const fileName = this.props.file.file;
+    for (let _i = 0, _length = configTypeFile.length; _i < _length; _i++) {
+        if(fileName.search(configTypeFile[_i]) != -1) {
+          type = configTypeFile[_i];
+          break;
+        }
+    }
+    return type;
+  };
+
   render() {
     const { file, settings } = this.props;
     const fileName = file.file;
     const fileUrl = `${settings.domain}/${file.file}`;
     const modifiedDate = moment(file.modified);
+    const fileType = this.handleType();
     const modifiedDateFormated = modifiedDate.format(`${settings.date_format}`);
     const fileSizeFormated = helper.formatFileSize(file.size);
 
     return (
       <div className={style.item + " row row--no-gutter middle-xs"}>
-        <div className={style.name + " col-xs-5"}><a href={fileUrl} target="_blank" rel="noopener">{file.file}</a></div>
+        <div className={style.name + " col-xs-3"}><a href={fileUrl} target="_blank" rel="noopener">{file.file}</a></div>
+        <div className={style.name + " col-xs-2"}>{fileType}</div>
         <div className={style.date + " col-xs-3"}>{modifiedDateFormated}</div>
         <div className={style.size + " col-xs-2"}>{fileSizeFormated}</div>
         <div className={style.more + " col-xs-2"}>
@@ -89,7 +107,8 @@ export default class FileList extends React.Component {
     return (
       <Fragment>
         <div className={style.head + " row row--no-gutter"}>
-          <div className="col-xs-5">{messages.fileName}</div>
+          <div className="col-xs-3">{messages.fileName}</div>
+          <div className="col-xs-2">{messages.fileType}</div>
           <div className="col-xs-3">{messages.fileModified}</div>
           <div className="col-xs-2">{messages.fileSize}</div>
           <div className="col-xs-2"></div>
