@@ -14,8 +14,6 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 const Fragment = React.Fragment;
 
-const configTypeFile = ['BASE', 'COMP', 'PRICE'];
-
 const iconButtonElement = (
   <IconButton touch={true}>
     <FontIcon color="rgb(189, 189, 189)" className="material-icons">more_vert</FontIcon>
@@ -44,26 +42,12 @@ class FileItem extends React.Component {
     this.hideDelete();
   };
 
-  handleType = () => {
- 
-    let type = "unknown";
-    const configTypeFile = ['BASE', 'COMP', 'PRICE'];
-    const fileName = this.props.file.file;
-    for (let _i = 0, _length = configTypeFile.length; _i < _length; _i++) {
-        if(fileName.search(configTypeFile[_i]) != -1) {
-          type = configTypeFile[_i];
-          break;
-        }
-    }
-    return type;
-  };
-
   render() {
     const { file, settings } = this.props;
     const fileName = file.file;
     const fileUrl = `${settings.domain}/${file.file}`;
     const modifiedDate = moment(file.modified);
-    const fileType = this.handleType();
+    const fileType = file.type;
     const modifiedDateFormated = modifiedDate.format(`${settings.date_format}`);
     const fileSizeFormated = helper.formatFileSize(file.size);
 

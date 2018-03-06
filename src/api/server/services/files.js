@@ -7,6 +7,9 @@ const formidable = require('formidable');
 const utils = require('../lib/utils');
 const settings = require('../lib/settings');
 
+// here we add all files type...
+const configTypeFile = ['BASE', 'COMP', 'PRICE'];
+
 const CONTENT_PATH = path.resolve(settings.filesUploadPath);
 
 class FilesService {
@@ -16,12 +19,24 @@ class FilesService {
     if(stats.isFile()){
       return {
         file: fileName,
+        type: this.fileType(fileName),
         size: stats.size,
         modified: stats.mtime
       }
     } else {
       return null;
     }
+  }
+
+  fileType(fileName) {
+    let type = "unknown";
+    for (let _i = 0, _length = configTypeFile.length; _i < _length; _i++) {
+        if(fileName.search(configTypeFile[_i]) != -1) {
+          type = configTypeFile[_i];
+          break;
+        }
+    }
+    return type;
   }
 
   getFilesData(files) {
