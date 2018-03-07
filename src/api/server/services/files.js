@@ -6,6 +6,7 @@ const url = require('url');
 const formidable = require('formidable');
 const utils = require('../lib/utils');
 const settings = require('../lib/settings');
+const Papa = require('papaparse');
 
 // here we add all files type...
 const configTypeFile = ['BASE', 'COMP', 'PRICE'];
@@ -58,6 +59,30 @@ class FilesService {
       })
     });
   }
+
+  getFileInfos(fileName) {
+    return new Promise((resolve, reject) => {
+      const filePath = CONTENT_PATH + '/' + fileName;
+      const stats = fs.createReadStream(filePath);
+      if(fs.existsSync(filePath)){
+          Papa.parse(stats, {
+            newline: "",  // auto-detect
+            quoteChar: '"', 
+            header: true,
+            dynamicTyping: false,
+            skipEmptyLines: true,
+          complete: function(results) {
+            //console.log("Finished:", results.meta);
+            resolve(results.data);
+          }
+        });
+      } else {
+        reject('File not found');
+      }
+    });
+  }
+
+
 
   deleteFile(fileName) {
     return new Promise((resolve, reject) => {

@@ -20,7 +20,8 @@
     {
       "name": "Restmount <jsonmount@gmail.com>",
       "url": "https://github.com/restmount"
-    }, {
+    },
+    {
       "name": "Sergey Onufrienko <sergey@onufrienko.com>",
       "url": "https://github.com/sonufrienko"
     }
@@ -49,6 +50,7 @@
     "start": "NODE_ENV=production npm run start-api & npm run start-store"
   },
   "dependencies": {
+    "ajv": "^6.2.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
@@ -80,6 +82,7 @@
     "node-sass": "^4.7.2",
     "nodemailer": "^4.6.0",
     "nodemailer-smtp-transport": "^2.7.4",
+    "papaparse": "^4.3.7",
     "query-string": "^5.1.0",
     "react": "^16.2.0",
     "react-chartjs-2": "^2.7.0",
